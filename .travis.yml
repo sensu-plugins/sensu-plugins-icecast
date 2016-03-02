@@ -1,19 +1,33 @@
 language: ruby
 cache:
-  - bundler
+- bundler
 install:
-  - bundle install
+- bundle install
 rvm:
-  - 1.9.3
-  - 2.0
-  - 2.1
-  - 2.2
+- 1.9.3
+- 2.0
+- 2.1
+- 2.2
 notifications:
   email:
     recipients:
-      - sensu-plugin@sensu-plugins.io
+    - sensu-plugin@sensu-plugins.io
     on_success: change
     on_failure: always
-
 script:
-  - 'bundle exec rake default'
+- bundle exec rake default
+- gem build sensu-plugins-icecast.gemspec
+- gem install sensu-plugins-icecast-*.gem
+deploy:
+  provider: rubygems
+  api_key:
+    secure: qnVZAbgzFLDUWZxl66BgmgpUcM7BYgbTuihePMqkNZuIs8EeOQ7nRAKTP8yDRHBWwd4iuRXMLioces0uKDcASx8T3a/xVAe725qBAL/eUHoYOkWU+oWr0vAJLt9ZHjOEcxGv+Px/4GauVGrjaqre3QIp7IoZj/t9x5t8ZSKBH2g=
+  gem: sensu-plugins-icecast
+  on:
+    tags: true
+    all_branches: true
+    rvm: 1.9.3
+    rvm: 2.0
+    rvm: 2.1
+    rvm: 2.2
+    repo: sensu-plugins/sensu-plugins-icecast
